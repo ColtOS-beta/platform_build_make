@@ -221,6 +221,28 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   # Dump fingerprints
   script.Print("Target: {}".format(target_info.fingerprint))
 
+  is_gapps = target_info.GetBuildProp("ro.colt.version").endswith("-gapps")
+  androidver = target_info.GetBuildProp("ro.build.version.release")
+  coltver = target_info.GetBuildProp("ro.colt.build.version")
+  build_id = target_info.GetBuildProp("ro.build.id")
+  build_date = target_info.GetBuildProp("ro.colt.build.date")
+  securitypatch = target_info.GetBuildProp("ro.build.version.security_patch")
+  coltdevice = target_info.GetBuildProp("ro.colt.device")
+
+  script.Print("--------------------------------------------")
+  script.Print("                Colt Enigma                     ")
+  script.Print("--------------------------------------------")
+  script.Print("Android Version: %s"%(androidver))
+  script.Print("Colt Version: %s"%(coltver))
+  script.Print("Build ID: %s"%(build_id))
+  script.Print("Build Date: %s"%(build_date))
+  script.Print("Security Patch: %s"%(securitypatch))
+  script.Print("Device: %s"%(coltdevice))
+  if is_gapps:
+    script.Print("GApps Build: Yes")
+  else:
+    script.Print("GApps Build: No")
+
   device_specific.FullOTA_InstallBegin()
 
   CopyInstallTools(output_zip)
